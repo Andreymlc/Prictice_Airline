@@ -15,6 +15,7 @@ public class Purchase {
     private int price;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "purchase_id", nullable = false)
     public int getId() {
         return id;

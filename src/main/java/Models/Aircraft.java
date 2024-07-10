@@ -1,9 +1,8 @@
 package Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "\"Aircraft\"")
@@ -12,6 +11,9 @@ public class Aircraft {
     private String model;
     private int priceSeat;
     private int capacity;
+
+    @OneToMany
+    private Set<Flight> flights;
 
     @Id
     @Column(name = "on_board_number", nullable = false, length = 10)

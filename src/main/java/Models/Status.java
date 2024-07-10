@@ -1,9 +1,8 @@
 package Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "\"Status\"")
@@ -11,6 +10,9 @@ public class Status {
     private int id;
     private String name;
     private int price;
+
+    @OneToMany(mappedBy = "status")
+    Set<Human> humans;
 
     @Id
     @Column(name = "id", nullable = false)

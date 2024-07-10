@@ -3,6 +3,7 @@ package Models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "\"Flight\"")
@@ -15,7 +16,11 @@ public class Flight {
     private LocalDate arrivalDate;
     private int price;
 
+    @OneToMany(mappedBy = "human")
+    private Set<Human> humans;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "flight_id", nullable = false)
     public int getId() {
         return id;

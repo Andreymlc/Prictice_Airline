@@ -3,6 +3,8 @@ package Models;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "\"Human\"")
 public class Human {
@@ -12,7 +14,11 @@ public class Human {
     private String passportId;
     private Status status;
 
+    @OneToMany(mappedBy = "flight")
+    private Set<Flight> flights;
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "human_id", nullable = false)
     public int getId() {
         return id;
