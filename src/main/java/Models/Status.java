@@ -11,7 +11,7 @@ public class Status {
     private String name;
     private int price;
 
-    @OneToMany(mappedBy = "status")
+    @OneToMany
     Set<Human> humans;
 
     @Id

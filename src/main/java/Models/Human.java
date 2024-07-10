@@ -14,8 +14,8 @@ public class Human {
     private String passportId;
     private Status status;
 
-    @OneToMany(mappedBy = "flight")
-    private Set<Flight> flights;
+    @OneToMany(mappedBy = "\"Human\"")
+    private Set<Purchase> purchases;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

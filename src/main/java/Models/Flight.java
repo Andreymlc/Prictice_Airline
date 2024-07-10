@@ -16,8 +16,8 @@ public class Flight {
     private LocalDate arrivalDate;
     private int price;
 
-    @OneToMany(mappedBy = "human")
-    private Set<Human> humans;
+    @OneToMany(mappedBy = "\"Flight\"")
+    private Set<Purchase> purchases;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
