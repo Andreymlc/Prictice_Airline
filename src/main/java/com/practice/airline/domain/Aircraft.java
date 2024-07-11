@@ -1,4 +1,4 @@
-package com.practice.airline.Entities;
+package com.practice.airline.domain;
 
 import jakarta.persistence.*;
 
@@ -10,12 +10,10 @@ public class Aircraft extends BaseEntity {
     private String onBoardNumber;
     private String model;
     private int capacity;
-    private Set<Flight> flights;
 
-    public Aircraft(String model, int capacity, Set<Flight> flights) {
+    public Aircraft(String model, int capacity) {
         setModel(model);
         setCapacity(capacity);
-        setFlights(flights);
     }
 
     protected Aircraft() {}
@@ -45,15 +43,5 @@ public class Aircraft extends BaseEntity {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    public Set<Flight> getFlights() {
-        return flights;
-    }
-
-    public void setFlights(Set<Flight> flights) {
-        this.flights = flights;
     }
 }

@@ -1,20 +1,18 @@
-package com.practice.airline.Entities;
+package com.practice.airline.domain;
 
 import jakarta.persistence.*;
-
-import java.util.Set;
 
 @Entity
 @Table(name = "status")
 public class Status extends BaseEntity{
     private String name;
     private double discount;
-    Set<Human> humans;
+    private double experienceBonus;
 
-    public Status(String name, double discount, Set<Human> humans) {
+    public Status(String name, double discount, double experienceBonus) {
         setName(name);
         setDiscount(discount);
-        setHumans(humans);
+        setExperienceBonus(experienceBonus);
     }
 
     protected Status() {}
@@ -37,13 +35,12 @@ public class Status extends BaseEntity{
         this.discount = discount;
     }
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    public Set<Human> getHumans() {
-        return humans;
+    @Column(name = "experience_bonus", nullable = false)
+    public double getExperienceBonus() {
+        return experienceBonus;
     }
 
-    public void setHumans(Set<Human> humans) {
-        this.humans = humans;
+    public void setExperienceBonus(double experienceBonus) {
+        this.experienceBonus = experienceBonus;
     }
 }

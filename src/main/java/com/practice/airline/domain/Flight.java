@@ -1,25 +1,25 @@
-package com.practice.airline.Entities;
+package com.practice.airline.domain;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "flight")
 public class Flight extends BaseEntity {
-    private Aircraft onBoardNumber;
+    private Aircraft aircraft_id;
     private Airport departureAirport;
     private Airport arrivalAirport;
-    private LocalDate departureDate;
-    private LocalDate arrivalDate;
+    private LocalDateTime departureDate;
+    private LocalDateTime  arrivalDate;
     private int price;
     private int cntEconomySeat;
     private int cntBusinessSeat;
     private Set<Booking> bookings;
 
-    public Flight(Aircraft onBoardNumber, Airport departureAirport, Airport arrivalAirport, LocalDate departureDate, LocalDate arrivalDate, int price, int cntEconomySeat, int cntBusinessSeat, Set<Booking> bookings) {
-        setOnBoardNumber(onBoardNumber);
+    public Flight(Aircraft aircraft_id, Airport departureAirport, Airport arrivalAirport, LocalDateTime  departureDate, LocalDateTime  arrivalDate, int price, int cntEconomySeat, int cntBusinessSeat, Set<Booking> bookings) {
+        setAircraft_id(aircraft_id);
         setDepartureAirport(departureAirport);
         setArrivalAirport(arrivalAirport);
         setDepartureDate(departureDate);
@@ -32,17 +32,17 @@ public class Flight extends BaseEntity {
 
     protected Flight() {}
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "on_board_number", nullable = false)
-    public Aircraft getOnBoardNumber() {
-        return onBoardNumber;
+    public Aircraft getAircraft_id() {
+        return aircraft_id;
     }
 
-    public void setOnBoardNumber(Aircraft onBoardNumber) {
-        this.onBoardNumber = onBoardNumber;
+    public void setAircraft_id(Aircraft onBoardNumber) {
+        this.aircraft_id = onBoardNumber;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "departure_airport_id", nullable = false)
     public Airport getDepartureAirport() {
         return departureAirport;
@@ -52,7 +52,7 @@ public class Flight extends BaseEntity {
         this.departureAirport = departureAirport;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "arrival_airport_id", nullable = false)
     public Airport getArrivalAirport() {
         return arrivalAirport;
@@ -63,20 +63,20 @@ public class Flight extends BaseEntity {
     }
 
     @Column(name = "departure_date", nullable = false)
-    public LocalDate getDepartureDate() {
+    public LocalDateTime  getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(LocalDate departureDate) {
+    public void setDepartureDate(LocalDateTime  departureDate) {
         this.departureDate = departureDate;
     }
 
     @Column(name = "arrival_date", nullable = false)
-    public LocalDate getArrivalDate() {
+    public LocalDateTime  getArrivalDate() {
         return arrivalDate;
     }
 
-    public void setArrivalDate(LocalDate arrivalDate) {
+    public void setArrivalDate(LocalDateTime  arrivalDate) {
         this.arrivalDate = arrivalDate;
     }
 
@@ -107,7 +107,7 @@ public class Flight extends BaseEntity {
         this.cntBusinessSeat = cntBusinessSeat;
     }
 
-    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "flight")
     public Set<Booking> getBookings() {
         return bookings;
     }

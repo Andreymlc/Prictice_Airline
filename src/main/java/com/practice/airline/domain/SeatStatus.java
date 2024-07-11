@@ -1,4 +1,4 @@
-package com.practice.airline.Entities;
+package com.practice.airline.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

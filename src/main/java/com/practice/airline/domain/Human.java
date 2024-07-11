@@ -1,5 +1,7 @@
-package com.practice.airline.Entities;
+package com.practice.airline.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -53,8 +55,7 @@ public class Human extends BaseEntity {
         this.passportId = passportId;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @ColumnDefault("0")
+    @ManyToOne
     @JoinColumn(name = "status_id", nullable = false)
     public Status getStatus() {
         return status;
@@ -73,7 +74,7 @@ public class Human extends BaseEntity {
         this.experience = experience;
     }
 
-    @OneToMany(mappedBy = "human", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "human", cascade = CascadeType.ALL)
     public Set<Booking> getBookings() {
         return bookings;
     }

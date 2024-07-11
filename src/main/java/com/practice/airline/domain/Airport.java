@@ -1,4 +1,4 @@
-package com.practice.airline.Entities;
+package com.practice.airline.domain;
 
 import jakarta.persistence.*;
 
@@ -10,13 +10,11 @@ public class Airport extends BaseEntity {
     private String iata;
     private String name;
     private String city;
-    private Set<Flight> flights;
 
-    public Airport(String icao, String name, String city, Set<Flight> flights) {
+    public Airport(String icao, String name, String city) {
         setIata(icao);
         setName(name);
         setCity(city);
-        setFlights(flights);
     }
 
     protected Airport() {}
@@ -46,15 +44,5 @@ public class Airport extends BaseEntity {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    public Set<Flight> getFlights() {
-        return flights;
-    }
-
-    public void setFlights(Set<Flight> flights) {
-        this.flights = flights;
     }
 }

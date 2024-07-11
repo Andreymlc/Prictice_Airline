@@ -1,19 +1,20 @@
-package com.practice.airline.Entities;
+package com.practice.airline.domain;
 
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "booking")
 public class Booking extends BaseEntity {
     private Human human;
     private Flight flight;
-    private LocalDate date;
+    private LocalDateTime date;
     private SeatStatus seatStatus;
     private int price;
 
-    public Booking(Human human, Flight flight, LocalDate date, SeatStatus seatStatus, int price) {
+    public Booking(Human human, Flight flight, LocalDateTime  date, SeatStatus seatStatus, int price) {
         setHuman(human);
         setFlight(flight);
         setDate(date);
@@ -44,11 +45,11 @@ public class Booking extends BaseEntity {
     }
 
     @Column(name = "date", nullable = false)
-    public LocalDate getDate() {
+    public LocalDateTime  getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime  date) {
         this.date = date;
     }
 
