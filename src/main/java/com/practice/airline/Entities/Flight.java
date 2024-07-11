@@ -1,4 +1,4 @@
-package Models;
+package com.practice.airline.Entities;
 
 import jakarta.persistence.*;
 
@@ -6,29 +6,31 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = "\"Flight\"")
-public class Flight {
-    private int id;
+@Table(name = "flight")
+public class Flight extends BaseEntity {
     private Aircraft onBoardNumber;
     private Airport departureAirport;
     private Airport arrivalAirport;
     private LocalDate departureDate;
     private LocalDate arrivalDate;
     private int price;
+    private int cntEconomySeat;
+    private int cntBusinessSeat;
+    private Set<Booking> bookings;
 
-    @OneToMany(mappedBy = "\"Flight\"")
-    private Set<Purchase> purchases;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "flight_id", nullable = false)
-    public int getId() {
-        return id;
+    public Flight(Aircraft onBoardNumber, Airport departureAirport, Airport arrivalAirport, LocalDate departureDate, LocalDate arrivalDate, int price, int cntEconomySeat, int cntBusinessSeat, Set<Booking> bookings) {
+        setOnBoardNumber(onBoardNumber);
+        setDepartureAirport(departureAirport);
+        setArrivalAirport(arrivalAirport);
+        setDepartureDate(departureDate);
+        setArrivalDate(arrivalDate);
+        setPrice(price);
+        setCntEconomySeat(cntEconomySeat);
+        setCntBusinessSeat(cntBusinessSeat);
+        setBookings(bookings);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    protected Flight() {}
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "on_board_number", nullable = false)
@@ -87,4 +89,30 @@ public class Flight {
         this.price = price;
     }
 
+    @Column(name = "cnt_economy_seat", nullable = false)
+    public int getCntEconomySeat() {
+        return cntEconomySeat;
+    }
+
+    public void setCntEconomySeat(int cntEconomySeat) {
+        this.cntEconomySeat = cntEconomySeat;
+    }
+
+    @Column(name = "cnt_business_seat", nullable = false)
+    public int getCntBusinessSeat() {
+        return cntBusinessSeat;
+    }
+
+    public void setCntBusinessSeat(int cntBusinessSeat) {
+        this.cntBusinessSeat = cntBusinessSeat;
+    }
+
+    @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
+    }
 }

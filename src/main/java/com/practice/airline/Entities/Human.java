@@ -1,4 +1,4 @@
-package Models;
+package com.practice.airline.Entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -6,27 +6,25 @@ import org.hibernate.annotations.ColumnDefault;
 import java.util.Set;
 
 @Entity
-@Table(name = "\"Human\"")
-public class Human {
-    private int id;
+@Table(name = "human")
+public class Human extends BaseEntity {
     private String fullName;
     private String phoneNumber;
     private String passportId;
     private Status status;
+    private int experience;
+    private Set<Booking> bookings;
 
-    @OneToMany(mappedBy = "\"Human\"")
-    private Set<Purchase> purchases;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "human_id", nullable = false)
-    public int getId() {
-        return id;
+    public Human(String fullName, String phoneNumber, String passportId, Status status, int experience, Set<Booking> bookings) {
+        setFullName(fullName);
+        setPhoneNumber(phoneNumber);
+        setPassportId(passportId);
+        setStatus(status);
+        setExperience(experience);
+        setBookings(bookings);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    protected Human() {}
 
     @Column(name = "full_name", nullable = false)
     public String getFullName() {
@@ -57,7 +55,7 @@ public class Human {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @ColumnDefault("0")
-    @JoinColumn(name = "status", nullable = false)
+    @JoinColumn(name = "status_id", nullable = false)
     public Status getStatus() {
         return status;
     }
@@ -66,4 +64,21 @@ public class Human {
         this.status = status;
     }
 
+    @Column(name = "experience", nullable = false)
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    @OneToMany(mappedBy = "human", fetch = FetchType.LAZY)
+    public Set<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(Set<Booking> bookings) {
+        this.bookings = bookings;
+    }
 }

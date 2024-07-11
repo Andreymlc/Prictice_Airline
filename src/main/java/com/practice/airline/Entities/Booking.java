@@ -1,29 +1,27 @@
-package Models;
+package com.practice.airline.Entities;
 
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "\"Purchase\"")
-public class Purchase {
-    private int id;
+@Table(name = "booking")
+public class Booking extends BaseEntity {
     private Human human;
     private Flight flight;
     private LocalDate date;
-    private String seat;
+    private SeatStatus seatStatus;
     private int price;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "purchase_id", nullable = false)
-    public int getId() {
-        return id;
+    public Booking(Human human, Flight flight, LocalDate date, SeatStatus seatStatus, int price) {
+        setHuman(human);
+        setFlight(flight);
+        setDate(date);
+        setSeatStatus(seatStatus);
+        setPrice(price);
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    protected Booking() {}
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "human_id", nullable = false)
@@ -54,13 +52,14 @@ public class Purchase {
         this.date = date;
     }
 
-    @Column(name = "seat", nullable = false, length = 3)
-    public String getSeat() {
-        return seat;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "seat_status_id", nullable = false)
+    public SeatStatus getSeatStatus() {
+        return seatStatus;
     }
 
-    public void setSeat(String seat) {
-        this.seat = seat;
+    public void setSeatStatus(SeatStatus seatStatus) {
+        this.seatStatus = seatStatus;
     }
 
     @Column(name = "price", nullable = false)
@@ -71,5 +70,4 @@ public class Purchase {
     public void setPrice(int price) {
         this.price = price;
     }
-
 }
