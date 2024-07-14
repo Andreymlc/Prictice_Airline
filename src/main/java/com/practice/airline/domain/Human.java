@@ -15,15 +15,15 @@ public class Human extends BaseEntity {
     private String passportId;
     private Status status;
     private int experience;
-    private Set<Booking> bookings;
+    private int points;
 
-    public Human(String fullName, String phoneNumber, String passportId, Status status, int experience, Set<Booking> bookings) {
+    public Human(String fullName, String phoneNumber, String passportId, Status status, int experience, int points) {
         setFullName(fullName);
         setPhoneNumber(phoneNumber);
         setPassportId(passportId);
         setStatus(status);
         setExperience(experience);
-        setBookings(bookings);
+        setPoints(points);
     }
 
     protected Human() {}
@@ -74,12 +74,12 @@ public class Human extends BaseEntity {
         this.experience = experience;
     }
 
-    @OneToMany(mappedBy = "human", cascade = CascadeType.ALL)
-    public Set<Booking> getBookings() {
-        return bookings;
+    @Column(name = "points", nullable = false)
+    public int getPoints() {
+        return points;
     }
 
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
+    public void setPoints(int points) {
+        this.points = points;
     }
 }

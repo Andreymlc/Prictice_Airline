@@ -7,12 +7,12 @@ import jakarta.persistence.*;
 public class Status extends BaseEntity{
     private String name;
     private double discount;
-    private double experienceBonus;
+    private double coefficientPoints;
 
-    public Status(String name, double discount, double experienceBonus) {
+    public Status(String name, double discount, double coefficientPoints) {
         setName(name);
         setDiscount(discount);
-        setExperienceBonus(experienceBonus);
+        setCoefficientPoints(coefficientPoints);
     }
 
     protected Status() {}
@@ -36,11 +36,11 @@ public class Status extends BaseEntity{
     }
 
     @Column(name = "experience_bonus", nullable = false)
-    public double getExperienceBonus() {
-        return experienceBonus;
+    public double getCoefficientPoints() {
+        return coefficientPoints;
     }
 
-    public void setExperienceBonus(double experienceBonus) {
-        this.experienceBonus = experienceBonus;
+    public void setCoefficientPoints(double coefficientPoints) {
+        this.coefficientPoints = coefficientPoints;
     }
 }

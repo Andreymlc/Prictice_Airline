@@ -2,7 +2,6 @@ package com.practice.airline.domain;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -13,8 +12,9 @@ public class Booking extends BaseEntity {
     private LocalDateTime date;
     private SeatStatus seatStatus;
     private int price;
+    private int spentPoints;
 
-    public Booking(Human human, Flight flight, LocalDateTime  date, SeatStatus seatStatus, int price) {
+    public Booking(Human human, Flight flight, LocalDateTime date, SeatStatus seatStatus, int price) {
         setHuman(human);
         setFlight(flight);
         setDate(date);
@@ -70,5 +70,14 @@ public class Booking extends BaseEntity {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Column(name = "spent_points", nullable = false)
+    public int getSpentPoints() {
+        return spentPoints;
+    }
+
+    public void setSpentPoints(int spentBonuses) {
+        this.spentPoints = spentBonuses;
     }
 }

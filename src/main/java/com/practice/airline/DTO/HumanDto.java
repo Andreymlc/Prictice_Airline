@@ -1,20 +1,9 @@
 package com.practice.airline.DTO;
 
 public class HumanDto {
-    private Long id;
     private String fullName;
     private String phoneNumber;
     private String passportId;
-    private StatusDto status;
-    private int experience;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getFullName() {
         return fullName;
@@ -38,21 +27,5 @@ public class HumanDto {
 
     public void setPassportId(String passportId) {
         this.passportId = passportId;
-    }
-
-    public StatusDto getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusDto status) {
-        this.status = status;
-    }
-
-    public int getExperience() {
-        return experience;
-    }
-
-    public void setExperience(int experience) {
-        this.experience = experience;
     }
 }

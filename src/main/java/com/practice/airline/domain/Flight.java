@@ -3,12 +3,11 @@ package com.practice.airline.domain;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Table(name = "flight")
 public class Flight extends BaseEntity {
-    private Aircraft aircraft_id;
+    private Aircraft aircraftId;
     private Airport departureAirport;
     private Airport arrivalAirport;
     private LocalDateTime departureDate;
@@ -16,10 +15,9 @@ public class Flight extends BaseEntity {
     private int price;
     private int cntEconomySeat;
     private int cntBusinessSeat;
-    private Set<Booking> bookings;
 
-    public Flight(Aircraft aircraft_id, Airport departureAirport, Airport arrivalAirport, LocalDateTime  departureDate, LocalDateTime  arrivalDate, int price, int cntEconomySeat, int cntBusinessSeat, Set<Booking> bookings) {
-        setAircraft_id(aircraft_id);
+    public Flight(Aircraft aircraftId, Airport departureAirport, Airport arrivalAirport, LocalDateTime  departureDate, LocalDateTime  arrivalDate, int price, int cntEconomySeat, int cntBusinessSeat) {
+        setAircraftId(aircraftId);
         setDepartureAirport(departureAirport);
         setArrivalAirport(arrivalAirport);
         setDepartureDate(departureDate);
@@ -27,19 +25,18 @@ public class Flight extends BaseEntity {
         setPrice(price);
         setCntEconomySeat(cntEconomySeat);
         setCntBusinessSeat(cntBusinessSeat);
-        setBookings(bookings);
     }
 
     protected Flight() {}
 
     @ManyToOne
     @JoinColumn(name = "on_board_number", nullable = false)
-    public Aircraft getAircraft_id() {
-        return aircraft_id;
+    public Aircraft getAircraftId() {
+        return aircraftId;
     }
 
-    public void setAircraft_id(Aircraft onBoardNumber) {
-        this.aircraft_id = onBoardNumber;
+    public void setAircraftId(Aircraft onBoardNumber) {
+        this.aircraftId = onBoardNumber;
     }
 
     @ManyToOne
@@ -105,14 +102,5 @@ public class Flight extends BaseEntity {
 
     public void setCntBusinessSeat(int cntBusinessSeat) {
         this.cntBusinessSeat = cntBusinessSeat;
-    }
-
-    @OneToMany(mappedBy = "flight")
-    public Set<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(Set<Booking> bookings) {
-        this.bookings = bookings;
     }
 }

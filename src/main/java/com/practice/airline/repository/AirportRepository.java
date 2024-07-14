@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AirportRepository extends JpaRepository<Airport, Long> {
+public interface AirportRepository extends FindRepository<Airport, Long> {
     @Query(value = "select a from Airport a where a.iata = :iata")
     List<Airport> findByIata(@Param("iata") String iata);
 

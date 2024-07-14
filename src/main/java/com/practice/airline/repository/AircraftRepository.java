@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AircraftRepository extends JpaRepository<Aircraft, Integer> {
+public interface AircraftRepository extends FindRepository<Aircraft, Long> {
     @Query(value = "select a from Aircraft a where a.onBoardNumber = :onBoardNumber")
     List<Aircraft> findByOnBoardNumber(@Param("onBoardNumber") String onBoardNumber);
 
