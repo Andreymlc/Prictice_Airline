@@ -55,7 +55,7 @@ public class Human extends BaseEntity {
         this.passportId = passportId;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "status_id", nullable = false)
     public Status getStatus() {
         return status;

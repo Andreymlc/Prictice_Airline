@@ -14,12 +14,13 @@ public class Booking extends BaseEntity {
     private int price;
     private int spentPoints;
 
-    public Booking(Human human, Flight flight, LocalDateTime date, SeatStatus seatStatus, int price) {
+    public Booking(Human human, Flight flight, LocalDateTime date, SeatStatus seatStatus, int price, int spentPoints) {
         setHuman(human);
         setFlight(flight);
         setDate(date);
         setSeatStatus(seatStatus);
         setPrice(price);
+        setSpentPoints(spentPoints);
     }
 
     protected Booking() {}

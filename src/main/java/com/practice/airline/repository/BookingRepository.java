@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface BookingRepository extends FindRepository<Booking, Long> {
-    void save(Booking booking);
+import java.util.List;
 
-    @Query(value = "select b.human from Booking b where b.id = :id")
-    Human findAllHumanByBooking(@Param("id") Long id);
+@Repository
+public interface BookingRepository extends FindRepository<Booking, Long>, CreateRepository<Booking> {
+
+    @Query(value = "select b.human from Booking b where b.id = :id  order by b.id")
+    List<Human> findAllHumanByBooking(@Param("id") Long id);
 }

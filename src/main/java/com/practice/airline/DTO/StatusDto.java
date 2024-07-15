@@ -1,23 +1,10 @@
-package com.practice.airline.domain;
+package com.practice.airline.DTO;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "status")
-public class Status extends BaseEntity{
+public class StatusDto {
     private String name;
     private double discount;
     private double coefficientPoints;
 
-    public Status(String name, double discount, double coefficientPoints) {
-        setName(name);
-        setDiscount(discount);
-        setCoefficientPoints(coefficientPoints);
-    }
-
-    protected Status() {}
-
-    @Column(name = "name", nullable = false, length = 10)
     public String getName() {
         return name;
     }
@@ -26,7 +13,6 @@ public class Status extends BaseEntity{
         this.name = name;
     }
 
-    @Column(name = "discount", nullable = false)
     public double getDiscount() {
         return discount;
     }
@@ -35,7 +21,6 @@ public class Status extends BaseEntity{
         this.discount = discount;
     }
 
-    @Column(name = "coefficient_points", nullable = false)
     public double getCoefficientPoints() {
         return coefficientPoints;
     }

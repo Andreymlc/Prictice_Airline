@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface AirportRepository extends FindRepository<Airport, Long> {
-    @Query(value = "select a from Airport a where a.iata = :iata")
+    @Query(value = "select a from Airport a where a.iata = :iata  order by a.id")
     List<Airport> findByIata(@Param("iata") String iata);
 
-    @Query(value = "select a from Airport a where a.city = :city")
+    @Query(value = "select a from Airport a where a.city = :city order by a.id")
     List<Airport> findByCity(@Param("city") String city);
 }

@@ -1,45 +1,46 @@
 package com.practice.airline.controller;
 
+import com.practice.airline.DTO.AddHumanDto;
 import com.practice.airline.DTO.HumanDto;
-import com.practice.airline.service.HumanService;
+import com.practice.airline.DTO.StatusDto;
+import com.practice.airline.service.IHumanService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/human")
 public class HumanController {
-    private final HumanService humanService;
+    private final IHumanService humanService;
 
-    public HumanController(HumanService humanService) {
+    public HumanController(IHumanService humanService) {
         this.humanService = humanService;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addHuman(@RequestBody HumanDto humanDto) {
-        try {
-            humanService.registerHuman(humanDto);
-            return ResponseEntity.ok("Человек успешно добавлен");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Ошибка добавления человека: " + e.getMessage());
-        }
+    public HumanDto addHuman(@RequestBody AddHumanDto addHumanDto) {
+        return humanService.registerHuman(addHumanDto);
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<?> getAllHuman() {
-        try {
-            return ResponseEntity.ok(humanService.getAllHumans());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Ошибка добавления человека: " + e.getMessage());
-        }
+    @GetMapping("/getAll")
+    public List<HumanDto> getAllHuman() {
+        return humanService.getAllHumans();
     }
 
+    @GetMapping("/getById/{id}")
+    public HumanDto getHumanById(@PathVariable Long id) {
+        return humanService.getDtoById(id);
+    }
 
-    @GetMapping("/getByStatus/{status}")
-    public ResponseEntity<?> getHumanByStatus(@PathVariable  String status) {
-        try {
-            return ResponseEntity.ok(humanService.getHumanByStatus(status));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Ошибка добавления человека: " + e.getMessage());
-        }
+    @GetMapping("/getStatus/{id}")
+    public StatusDto getStatus(@PathVariable Long id) {
+        return humanService.getStatus(id);
+    }
+
+    @GetMapping("/getByStatus/{statusId}")
+    public List<HumanDto> getHumanByStatus(@PathVariable Long statusId) {
+        return humanService.getHumanByStatus(statusId);
     }
 }

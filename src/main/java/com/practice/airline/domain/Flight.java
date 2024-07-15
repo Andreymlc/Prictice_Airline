@@ -29,7 +29,7 @@ public class Flight extends BaseEntity {
 
     protected Flight() {}
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "on_board_number", nullable = false)
     public Aircraft getAircraftId() {
         return aircraftId;
@@ -39,7 +39,7 @@ public class Flight extends BaseEntity {
         this.aircraftId = onBoardNumber;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "departure_airport_id", nullable = false)
     public Airport getDepartureAirport() {
         return departureAirport;
@@ -49,7 +49,7 @@ public class Flight extends BaseEntity {
         this.departureAirport = departureAirport;
     }
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "arrival_airport_id", nullable = false)
     public Airport getArrivalAirport() {
         return arrivalAirport;

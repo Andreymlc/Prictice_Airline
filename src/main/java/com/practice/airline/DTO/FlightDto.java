@@ -3,43 +3,44 @@ package com.practice.airline.DTO;
 import java.time.LocalDateTime;
 
 public class FlightDto {
-    private Long aircraft_id;
-    private Long departureAirportId;
-    private Long arrivalAirportId;
+    private Long flightId;
+    private String onBoardNumber;
+    private String departureIata;
+    private String arrivalIata;
     private LocalDateTime departureDate;
-    private LocalDateTime arrivalDate;
+    private LocalDateTime  arrivalDate;
     private int price;
 
-    public Long getAircraft_id() {
-        return aircraft_id;
+    public Long getFlightId() {
+        return flightId;
     }
 
-    public void setAircraft_id(Long aircraft_id) {
-        this.aircraft_id = aircraft_id;
+    public void setFlightId(Long flightId) {
+        this.flightId = flightId;
     }
 
-    public Long getDepartureAirportId() {
-        return departureAirportId;
+    public String getOnBoardNumber() {
+        return onBoardNumber;
     }
 
-    public void setDepartureAirportId(Long departureAirportId) {
-        this.departureAirportId = departureAirportId;
+    public void setOnBoardNumber(String onBoardNumber) {
+        this.onBoardNumber = onBoardNumber;
     }
 
-    public Long getArrivalAirportId() {
-        return arrivalAirportId;
+    public String getDepartureIata() {
+        return departureIata;
     }
 
-    public void setArrivalAirportId(Long arrivalAirportId) {
-        this.arrivalAirportId = arrivalAirportId;
+    public void setDepartureIata(String departureIata) {
+        this.departureIata = departureIata;
     }
 
-    public LocalDateTime getArrivalDate() {
-        return arrivalDate;
+    public String getArrivalIata() {
+        return arrivalIata;
     }
 
-    public void setArrivalDate(LocalDateTime arrivalDate) {
-        this.arrivalDate = arrivalDate;
+    public void setArrivalIata(String arrivalIata) {
+        this.arrivalIata = arrivalIata;
     }
 
     public LocalDateTime getDepartureDate() {
@@ -48,6 +49,14 @@ public class FlightDto {
 
     public void setDepartureDate(LocalDateTime departureDate) {
         this.departureDate = departureDate;
+    }
+
+    public LocalDateTime getArrivalDate() {
+        return arrivalDate;
+    }
+
+    public void setArrivalDate(LocalDateTime arrivalDate) {
+        this.arrivalDate = arrivalDate;
     }
 
     public int getPrice() {

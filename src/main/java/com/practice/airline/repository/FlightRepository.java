@@ -1,6 +1,7 @@
 package com.practice.airline.repository;
 
 import com.practice.airline.domain.Flight;
+import com.practice.airline.domain.Human;
 import com.practice.airline.domain.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,11 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface FlightRepository extends FindRepository<Flight, Long> {
-    void save(Flight flight);
+public interface FlightRepository extends FindRepository<Flight, Long>, CreateRepository<Flight> {
 
-    @Query("select f from Flight f join f.aircraftId a where a.onBoardNumber = :onBoardNumber")
-    List<Flight> findFlightsByOnBoardNumber(@Param("onBoardNumber") String onBoardNumber);
+    @Query("select f from Flight f join f.aircraftId a where a.id = :id order by f.id")
+    List<Flight> findFlightsByAircraft(@Param("id") Long id);
 
     @Modifying
     @Transactional

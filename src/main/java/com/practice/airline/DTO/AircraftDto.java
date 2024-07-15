@@ -1,25 +1,23 @@
-package com.practice.airline.domain;
+package com.practice.airline.DTO;
 
-import jakarta.persistence.*;
+import com.practice.airline.domain.Flight;
 
-import java.util.List;
+import java.util.Set;
 
-@Entity
-@Table(name = "aircraft")
-public class Aircraft extends BaseEntity {
+public class AircraftDto {
+    private Long id;
     private String onBoardNumber;
     private String model;
     private int capacity;
 
-    public Aircraft(String onBoardNumber ,String model, int capacity) {
-        setOnBoardNumber(onBoardNumber);
-        setModel(model);
-        setCapacity(capacity);
+    public Long getId() {
+        return id;
     }
 
-    protected Aircraft() {}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    @Column(name = "on_board_number", nullable = false, length = 10)
     public String getOnBoardNumber() {
         return onBoardNumber;
     }
@@ -28,7 +26,6 @@ public class Aircraft extends BaseEntity {
         this.onBoardNumber = onBoardNumber;
     }
 
-    @Column(name = "model", nullable = false, length = 20)
     public String getModel() {
         return model;
     }
@@ -37,7 +34,6 @@ public class Aircraft extends BaseEntity {
         this.model = model;
     }
 
-    @Column(name = "capacity", nullable = false)
     public int getCapacity() {
         return capacity;
     }
