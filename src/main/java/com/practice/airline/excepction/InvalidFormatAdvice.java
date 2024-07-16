@@ -1,4 +1,4 @@
-package com.practice.airline.exсepction;
+package com.practice.airline.excepction;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

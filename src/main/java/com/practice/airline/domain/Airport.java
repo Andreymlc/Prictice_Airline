@@ -2,8 +2,6 @@ package com.practice.airline.domain;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
-
 @Entity
 @Table(name = "airport")
 public class Airport extends BaseEntity {

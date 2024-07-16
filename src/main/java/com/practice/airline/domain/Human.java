@@ -1,11 +1,6 @@
 package com.practice.airline.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
-
-import java.util.Set;
 
 @Entity
 @Table(name = "human")

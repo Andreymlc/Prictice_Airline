@@ -1,4 +1,4 @@
-package com.practice.airline.exсepction;
+package com.practice.airline.excepction;
 
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String message) {

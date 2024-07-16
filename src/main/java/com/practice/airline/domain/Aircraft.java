@@ -2,8 +2,6 @@ package com.practice.airline.domain;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "aircraft")
 public class Aircraft extends BaseEntity {

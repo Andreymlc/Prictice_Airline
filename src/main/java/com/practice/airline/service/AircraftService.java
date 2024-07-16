@@ -3,8 +3,8 @@ package com.practice.airline.service;
 import com.practice.airline.DTO.AddAircraftDto;
 import com.practice.airline.DTO.AircraftDto;
 import com.practice.airline.domain.Aircraft;
-import com.practice.airline.exсepction.EntityNotFoundException;
-import com.practice.airline.exсepction.InvalidFormatException;
+import com.practice.airline.excepction.EntityNotFoundException;
+import com.practice.airline.excepction.InvalidFormatException;
 import com.practice.airline.repository.AircraftRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class AircraftService implements IAircraftService {
     private final AircraftRepository aircraftRepo;
     private final ModelMapper modelMapper;
 
-    private static final String ON_BOARD_NUMBER_REGEX = "^[A-Z]{1,2}-?\\d{1,5}[A-Z]{0,2}$|^[N]\\d{1,5}[A-Z]{0,2}$|^[A-Z]{1,3}-[A-Z]{1,2}\\d{1,2}$|^[A-Z]{1,3}\\d{1,5}$";
+    private static final String ON_BOARD_NUMBER_REGEX = "^[A-Z]{1,2}-?\\d{1,5}[A-Z]{0,2}$";
 
     public AircraftService(AircraftRepository aircraftRepo, ModelMapper modelMapper) {
         this.aircraftRepo = aircraftRepo;

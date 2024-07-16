@@ -1,4 +1,4 @@
-package com.practice.airline.exсepction;
+package com.practice.airline.excepction;
 
 public class InvalidFormatException extends RuntimeException {
     public InvalidFormatException(String message) {

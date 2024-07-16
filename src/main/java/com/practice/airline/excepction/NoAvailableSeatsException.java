@@ -1,4 +1,4 @@
-package com.practice.airline.exсepction;
+package com.practice.airline.excepction;
 
 public class NoAvailableSeatsException extends RuntimeException {
     public NoAvailableSeatsException() {

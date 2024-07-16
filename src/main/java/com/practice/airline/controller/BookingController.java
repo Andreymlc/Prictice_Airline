@@ -2,9 +2,7 @@ package com.practice.airline.controller;
 
 import com.practice.airline.DTO.AddBookingDto;
 import com.practice.airline.DTO.BookingDto;
-import com.practice.airline.exсepction.EntityNotFoundException;
 import com.practice.airline.service.IBookingService;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

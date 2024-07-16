@@ -2,13 +2,12 @@ package com.practice.airline.service;
 
 import com.practice.airline.DTO.AddFlightDto;
 import com.practice.airline.DTO.FlightDto;
-import com.practice.airline.DTO.HumanDto;
 import com.practice.airline.domain.Aircraft;
 import com.practice.airline.domain.Airport;
 import com.practice.airline.domain.Flight;
-import com.practice.airline.exсepction.EntityNotFoundException;
-import com.practice.airline.exсepction.InvalidFormatException;
-import com.practice.airline.exсepction.NoAvailableSeatsException;
+import com.practice.airline.excepction.EntityNotFoundException;
+import com.practice.airline.excepction.InvalidFormatException;
+import com.practice.airline.excepction.NoAvailableSeatsException;
 import com.practice.airline.repository.AircraftRepository;
 import com.practice.airline.repository.AirportRepository;
 import com.practice.airline.repository.FlightRepository;
