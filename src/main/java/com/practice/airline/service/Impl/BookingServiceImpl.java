@@ -1,4 +1,4 @@
-package com.practice.airline.service;
+package com.practice.airline.service.Impl;
 
 import com.practice.airline.DTO.AddBookingDto;
 import com.practice.airline.DTO.BookingDto;
@@ -7,6 +7,9 @@ import com.practice.airline.excepction.EntityNotFoundException;
 import com.practice.airline.excepction.InvalidFormatException;
 import com.practice.airline.repository.BookingRepository;
 import com.practice.airline.repository.SeatStatusRepository;
+import com.practice.airline.service.IBookingService;
+import com.practice.airline.service.IFlightService;
+import com.practice.airline.service.IHumanService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +31,6 @@ public class BookingServiceImpl implements IBookingService {
     private static final float EXPERIENCE_BONUS = 0.1f;
     public static final float MAX_BONUS_PERCENTAGE = 0.3f;
 
-    @Autowired
     public BookingServiceImpl(BookingRepository bookingRepo, IHumanService humanService, IFlightService flightService, SeatStatusRepository seatStatusRepo, ModelMapper modelMapper) {
         this.bookingRepo = bookingRepo;
         this.humanService = humanService;

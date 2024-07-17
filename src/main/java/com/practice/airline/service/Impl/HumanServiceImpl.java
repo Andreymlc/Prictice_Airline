@@ -1,4 +1,4 @@
-package com.practice.airline.service;
+package com.practice.airline.service.Impl;
 
 import com.practice.airline.DTO.AddHumanDto;
 import com.practice.airline.DTO.HumanDto;
@@ -10,6 +10,7 @@ import com.practice.airline.excepction.HumanAlreadyExistsException;
 import com.practice.airline.excepction.InvalidFormatException;
 import com.practice.airline.repository.HumanRepository;
 import com.practice.airline.repository.StatusRepository;
+import com.practice.airline.service.IHumanService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,6 @@ public class HumanServiceImpl implements IHumanService {
     private static final String PHONE_NUMBER_REGEX = "^8\\d{10}$";
     private static final String PASSPORT_ID_REGEX = "^\\d{10}";
 
-    @Autowired
     public HumanServiceImpl(HumanRepository humanRepo, StatusRepository statusRepo, ModelMapper modelMapper) {
         this.humanRepo = humanRepo;
         this.statusRepo = statusRepo;
@@ -100,7 +100,7 @@ public class HumanServiceImpl implements IHumanService {
         }
 
         Status status = statusRepo.findById(1L)
-                .orElseThrow(() -> new EntityNotFoundException("Статус с ID" + 1 + "не найден"));
+                .orElseThrow(() -> new EntityNotFoundException("Статус с ID " + 1 + " не найден"));
 
         Human human = new Human(
                 fullName,
@@ -122,16 +122,16 @@ public class HumanServiceImpl implements IHumanService {
 
         if (newExperience < 3000 && currentStatus.getId() != 1) {
             newStatus = statusRepo.findById(1L)
-                    .orElseThrow(() -> new EntityNotFoundException("Статус с ID" + 1 + "не найден"));;
+                    .orElseThrow(() -> new EntityNotFoundException("Статус с ID " + 1 + " не найден"));;
         } else if (newExperience >= 3000 && newExperience < 5000 && currentStatus.getId() != 2) {
             newStatus = statusRepo.findById(2L)
-                    .orElseThrow(() -> new EntityNotFoundException("Статус с ID" + 2 + "не найден"));;
+                    .orElseThrow(() -> new EntityNotFoundException("Статус с ID " + 2 + " не найден"));;
         } else if (newExperience >= 5000 && newExperience < 7500 && currentStatus.getId() != 3) {
             newStatus = statusRepo.findById(3L)
-                    .orElseThrow(() -> new EntityNotFoundException("Статус с ID" + 3 + "не найден"));;
+                    .orElseThrow(() -> new EntityNotFoundException("Статус с ID " + 3 + " не найден"));;
         } else if (newExperience >= 7500 && currentStatus.getId() != 4) {
             newStatus = statusRepo.findById(4L)
-                    .orElseThrow(() -> new EntityNotFoundException("Статус с ID" + 4 + "не найден"));;
+                    .orElseThrow(() -> new EntityNotFoundException("Статус с ID " + 4 + " не найден"));;
         }
         humanRepo.updateStatus(newStatus, human.getId());
     }

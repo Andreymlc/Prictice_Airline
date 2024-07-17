@@ -1,4 +1,4 @@
-package com.practice.airline.service;
+package com.practice.airline.service.Impl;
 
 import com.practice.airline.DTO.AddFlightDto;
 import com.practice.airline.DTO.FlightDto;
@@ -11,6 +11,7 @@ import com.practice.airline.excepction.NoAvailableSeatsException;
 import com.practice.airline.repository.AircraftRepository;
 import com.practice.airline.repository.AirportRepository;
 import com.practice.airline.repository.FlightRepository;
+import com.practice.airline.service.IFlightService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,6 @@ public class FlightServiceImpl implements IFlightService {
     private final AirportRepository airportRepo;
     private final ModelMapper modelMapper;
 
-    @Autowired
     public FlightServiceImpl(FlightRepository flightRepo, AircraftRepository aircraftRepo, AirportRepository airportRepo, ModelMapper modelMapper) {
         this.flightRepo = flightRepo;
         this.aircraftRepo = aircraftRepo;

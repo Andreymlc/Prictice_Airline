@@ -2,7 +2,7 @@ package com.practice.airline.controller;
 
 import com.practice.airline.DTO.AddAircraftDto;
 import com.practice.airline.DTO.AircraftDto;
-import com.practice.airline.service.AircraftServiceImpl;
+import com.practice.airline.service.Impl.AircraftServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

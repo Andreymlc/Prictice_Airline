@@ -1,4 +1,4 @@
-package com.practice.airline.service;
+package com.practice.airline.service.Impl;
 
 import com.practice.airline.DTO.AddAircraftDto;
 import com.practice.airline.DTO.AircraftDto;
@@ -7,6 +7,7 @@ import com.practice.airline.excepction.EntityNotFoundException;
 import com.practice.airline.excepction.InvalidFormatException;
 import com.practice.airline.excepction.AircraftAlreadyExistsException;
 import com.practice.airline.repository.AircraftRepository;
+import com.practice.airline.service.IAircraftService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
