@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class FlightService implements IFlightService {
+public class FlightServiceImpl implements IFlightService {
 
     private final FlightRepository flightRepo;
     private final AircraftRepository aircraftRepo;
@@ -30,7 +30,7 @@ public class FlightService implements IFlightService {
     private final ModelMapper modelMapper;
 
     @Autowired
-    public FlightService(FlightRepository flightRepo, AircraftRepository aircraftRepo, AirportRepository airportRepo, ModelMapper modelMapper) {
+    public FlightServiceImpl(FlightRepository flightRepo, AircraftRepository aircraftRepo, AirportRepository airportRepo, ModelMapper modelMapper) {
         this.flightRepo = flightRepo;
         this.aircraftRepo = aircraftRepo;
         this.airportRepo = airportRepo;
@@ -47,13 +47,15 @@ public class FlightService implements IFlightService {
 
     @Override
     public FlightDto getDtoById(Long id) {
-        Flight flight = flightRepo.findById(id);
+        Flight flight = flightRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Рейс с ID " + id + " не найден"));
         return modelMapper.map(flight, FlightDto.class);
     }
 
     @Override
     public Flight getById(Long id) {
-        return flightRepo.findById(id);
+        return flightRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Рейс с ID " + id + " не найден"));
     }
 
     @Override
@@ -70,23 +72,15 @@ public class FlightService implements IFlightService {
 
     @Override
     public FlightDto addFlight(AddFlightDto addFlightDto) {
-        Aircraft aircraft = aircraftRepo.findById(addFlightDto.getAircraft_id());
+        Aircraft aircraft = aircraftRepo.findById(addFlightDto.getAircraft_id())
+                .orElseThrow(() -> new EntityNotFoundException("Воздушное судно с ID " + addFlightDto.getAircraft_id() + " не найдено"));
 
-        if (aircraft == null) {
-            throw new EntityNotFoundException("Воздушное судно с ID" + addFlightDto.getAircraft_id() + "не найдено");
-        }
+        Airport departureAirport = airportRepo.findById(addFlightDto.getDepartureAirportId())
+                .orElseThrow(() -> new EntityNotFoundException("Аэропорт с ID " + addFlightDto.getDepartureAirportId() + " не найден"));
 
-        Airport departureAirport = airportRepo.findById(addFlightDto.getDepartureAirportId());
+        Airport arrivalAirport = airportRepo.findById(addFlightDto.getArrivalAirportId())
+                .orElseThrow(() -> new EntityNotFoundException("Аэропорт с ID " + addFlightDto.getArrivalAirportId() + " не найден"));
 
-        if (departureAirport == null) {
-            throw new EntityNotFoundException("Аэропорт с ID" + addFlightDto.getDepartureAirportId() + "не найден");
-        }
-
-        Airport arrivalAirport = airportRepo.findById(addFlightDto.getArrivalAirportId());
-
-        if (arrivalAirport == null) {
-            throw new EntityNotFoundException("Аэропорт с ID" + addFlightDto.getDepartureAirportId() + "не найден");
-        }
 
         LocalDateTime departureDate = addFlightDto.getDepartureDate();
         LocalDateTime arrivalDate = addFlightDto.getArrivalDate();
@@ -113,6 +107,9 @@ public class FlightService implements IFlightService {
     @Override
     public List<FlightDto> getFlightsByAircraft(Long id) {
         List<Flight> flights = flightRepo.findFlightsByAircraft(id);
+        if (flights.isEmpty()) {
+            throw new EntityNotFoundException("Воздушное судно не выполняло рейсов или отсутсвует");
+        }
         return flights.stream()
                 .map(flight -> modelMapper.map(flight, FlightDto.class))
                 .collect(Collectors.toList());

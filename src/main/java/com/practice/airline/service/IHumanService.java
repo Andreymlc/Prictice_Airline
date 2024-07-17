@@ -20,9 +20,9 @@ public interface IHumanService {
 
     HumanDto registerHuman(AddHumanDto addHumanDto);
 
-    void updateStatus(Human human);
+    void updateStatus(Human human, int newExperience);
 
-    void updateExperience(Human human, int bonus);
+    void updateExperience(Human human, int experienceBonus);
 
     void updatePoints(Human human, int points);
 

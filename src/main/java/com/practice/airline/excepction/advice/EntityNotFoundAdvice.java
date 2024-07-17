@@ -1,5 +1,6 @@
-package com.practice.airline.excepction;
+package com.practice.airline.excepction.advice;
 
+import com.practice.airline.excepction.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,7 +12,7 @@ public class EntityNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String EntityNotFoundHandler(EntityNotFoundException ex) {
+    public String entityNotFoundHandler(EntityNotFoundException ex) {
         return ex.getMessage();
     }
 }

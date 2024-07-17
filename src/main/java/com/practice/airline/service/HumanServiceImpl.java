@@ -6,6 +6,7 @@ import com.practice.airline.DTO.StatusDto;
 import com.practice.airline.domain.Human;
 import com.practice.airline.domain.Status;
 import com.practice.airline.excepction.EntityNotFoundException;
+import com.practice.airline.excepction.HumanAlreadyExistsException;
 import com.practice.airline.excepction.InvalidFormatException;
 import com.practice.airline.repository.HumanRepository;
 import com.practice.airline.repository.StatusRepository;
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
-public class HumanService implements IHumanService {
+public class HumanServiceImpl implements IHumanService {
 
     private final HumanRepository humanRepo;
     private final StatusRepository statusRepo;
@@ -29,7 +30,7 @@ public class HumanService implements IHumanService {
     private static final String PASSPORT_ID_REGEX = "^\\d{10}";
 
     @Autowired
-    public HumanService(HumanRepository humanRepo, StatusRepository statusRepo, ModelMapper modelMapper) {
+    public HumanServiceImpl(HumanRepository humanRepo, StatusRepository statusRepo, ModelMapper modelMapper) {
         this.humanRepo = humanRepo;
         this.statusRepo = statusRepo;
         this.modelMapper = modelMapper;
@@ -49,20 +50,15 @@ public class HumanService implements IHumanService {
 
     @Override
     public HumanDto getDtoById(Long id) {
-        Human human = humanRepo.findById(id);
-        if (human == null) {
-            throw new EntityNotFoundException("Человек с ID " + id + " не найден");
-        }
+        Human human = humanRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Человек с ID " + id + " не найден"));
         return modelMapper.map(human, HumanDto.class);
     }
 
     @Override
     public Human getById(Long id) {
-        Human human = humanRepo.findById(id);
-        if (human == null) {
-            throw new EntityNotFoundException("Человек с ID " + id + " не найден");
-        }
-        return human;
+        return humanRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Человек с ID " + id + " не найден"));
     }
 
     @Override
@@ -98,11 +94,13 @@ public class HumanService implements IHumanService {
         if (!Pattern.matches(PASSPORT_ID_REGEX, passportId)) {
             throw new InvalidFormatException("Некорректный формат серии и номера паспорта: " + passportId);
         }
-        Status status = statusRepo.findById(1L);
 
-        if (status == null) {
-            throw new EntityNotFoundException("Статус с ID" + 1 + "не найден");
+        if (humanRepo.findByPhoneNumber(phoneNumber) != null || humanRepo.findByPassportID(passportId) != null) {
+            throw new HumanAlreadyExistsException("Такой человек уже существует");
         }
+
+        Status status = statusRepo.findById(1L)
+                .orElseThrow(() -> new EntityNotFoundException("Статус с ID" + 1 + "не найден"));
 
         Human human = new Human(
                 fullName,
@@ -118,28 +116,30 @@ public class HumanService implements IHumanService {
 
     @Transactional
     @Override
-    public void updateStatus(Human human) {
-        int experience = human.getExperience();
+    public void updateStatus(Human human, int newExperience) {
         Status currentStatus = human.getStatus();
-        Status newStatus = null;
+        Status newStatus = currentStatus;
 
-        if (experience < 3000 && currentStatus.getId() != 1) {
-            newStatus = statusRepo.findById(1L);
-        } else if (experience < 5000 && currentStatus.getId() != 2) {
-            newStatus = statusRepo.findById(2L);
-        } else if (experience < 7500 && currentStatus.getId() != 3) {
-            newStatus = statusRepo.findById(3L);
-        } else if (currentStatus.getId() != 4) {
-            newStatus = statusRepo.findById(4L);
+        if (newExperience < 3000 && currentStatus.getId() != 1) {
+            newStatus = statusRepo.findById(1L)
+                    .orElseThrow(() -> new EntityNotFoundException("Статус с ID" + 1 + "не найден"));;
+        } else if (newExperience >= 3000 && newExperience < 5000 && currentStatus.getId() != 2) {
+            newStatus = statusRepo.findById(2L)
+                    .orElseThrow(() -> new EntityNotFoundException("Статус с ID" + 2 + "не найден"));;
+        } else if (newExperience >= 5000 && newExperience < 7500 && currentStatus.getId() != 3) {
+            newStatus = statusRepo.findById(3L)
+                    .orElseThrow(() -> new EntityNotFoundException("Статус с ID" + 3 + "не найден"));;
+        } else if (newExperience >= 7500 && currentStatus.getId() != 4) {
+            newStatus = statusRepo.findById(4L)
+                    .orElseThrow(() -> new EntityNotFoundException("Статус с ID" + 4 + "не найден"));;
         }
         humanRepo.updateStatus(newStatus, human.getId());
     }
 
     @Transactional
     @Override
-    public void updateExperience(Human human, int bonus) {
-        int experience = human.getExperience() + bonus;
-        humanRepo.updateExperience(experience, human.getId());
+    public void updateExperience(Human human, int experienceBonus) {
+        humanRepo.updateExperience(experienceBonus, human.getId());
     }
 
     @Transactional

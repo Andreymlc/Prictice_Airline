@@ -13,6 +13,12 @@ import java.util.List;
 @Repository
 public interface HumanRepository extends FindRepository<Human, Long>, CreateRepository<Human> {
 
+    @Query(value = "select h from Human h where h.phoneNumber = :phoneNumber")
+    Human findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+
+    @Query(value = "select h from Human h where h.passportId = :passportId")
+    Human findByPassportID(@Param("passportId") String passportId);
+
     @Query(value = "select h from Human h join h.status s where s.id = :statusId order by h.id")
     List<Human> findByStatus(@Param("statusId") Long statusId);
 

@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class BookingService implements IBookingService {
+public class BookingServiceImpl implements IBookingService {
 
     private final BookingRepository bookingRepo;
     private final SeatStatusRepository seatStatusRepo;
@@ -29,7 +29,7 @@ public class BookingService implements IBookingService {
     public static final float MAX_BONUS_PERCENTAGE = 0.3f;
 
     @Autowired
-    public BookingService(BookingRepository bookingRepo, IHumanService humanService, IFlightService flightService, SeatStatusRepository seatStatusRepo, ModelMapper modelMapper) {
+    public BookingServiceImpl(BookingRepository bookingRepo, IHumanService humanService, IFlightService flightService, SeatStatusRepository seatStatusRepo, ModelMapper modelMapper) {
         this.bookingRepo = bookingRepo;
         this.humanService = humanService;
         this.flightService = flightService;
@@ -47,12 +47,14 @@ public class BookingService implements IBookingService {
 
     @Override
     public Booking getById(Long id) {
-        return bookingRepo.findById(id);
+        return bookingRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Бронирование с ID " + id + " не найдено"));
     }
 
     @Override
     public BookingDto getDtoById(Long id) {
-        Booking booking = bookingRepo.findById(id);
+        Booking booking = bookingRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Бронирование с ID " + id + " не найдено"));
         return modelMapper.map(booking, BookingDto.class);
     }
 
@@ -61,21 +63,11 @@ public class BookingService implements IBookingService {
     public BookingDto addBooking(AddBookingDto addBookingDto) {
         Human human = humanService.getById(addBookingDto.getHumanId());
 
-        if (human == null) {
-            throw new EntityNotFoundException("Человек с ID" + addBookingDto.getHumanId() + "не найден");
-        }
-
         Flight flight = flightService.getById(addBookingDto.getFlightId());
 
-        if (flight == null) {
-            throw new EntityNotFoundException("Рейс с ID" + addBookingDto.getFlightId() + "не найден");
-        }
+        SeatStatus seatStatus = seatStatusRepo.findById(addBookingDto.getSeatStatusId())
+                .orElseThrow(() -> new EntityNotFoundException("Класс с ID " + addBookingDto.getSeatStatusId() + " не найден"));
 
-        SeatStatus seatStatus = seatStatusRepo.findById(addBookingDto.getSeatStatusId());
-
-        if (seatStatus == null) {
-            throw new EntityNotFoundException("Класс с ID" + addBookingDto.getSeatStatusId() + "не найден");
-        }
 
         int points = addBookingDto.getPoints();
 
@@ -106,12 +98,14 @@ public class BookingService implements IBookingService {
                 points
         );
 
+        points -= (int) Math.round(price * human.getStatus().getCoefficientPoints());
+
         bookingRepo.save(booking);
         flightService.updateCntSeats(flight, seatStatus.getId());
-        int bonus = Math.round(price * EXPERIENCE_BONUS);
-        humanService.updateExperience(human, bonus);
+        int newExperience = human.getExperience() + Math.round(price * EXPERIENCE_BONUS);
+        humanService.updateExperience(human, newExperience);
         humanService.updatePoints(human, currentPoints - points);
-        humanService.updateStatus(human);
+        humanService.updateStatus(human, newExperience);
 
         return modelMapper.map(booking, BookingDto.class);
     }
